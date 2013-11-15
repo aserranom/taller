@@ -22,13 +22,14 @@ def audio_web():
 	os.system("sudo modprobe snd_bcm2835")
 	# Url de entrada
 	url = "http://65.60.34.34:8030"
-	user_url = raw_input("Indica una URL o apreta enter para escuchar una por default: ")
-	if user_url:
-		url = user_url
+	#user_url = raw_input("Indica una URL o apreta enter para escuchar una por default: ")
+	#if user_url:
+	#	url = user_url
 	# Se agrega la Url a la lista de playlists de mpc
-	os.system("sudo mpc add " + url)
+	os.system("sudo echo mi " + url)#sudo mpc add
 	# Se toca la Url agregada
-	os.system("sudo mpc play")
+	os.system("sudo echo mi mpc play")#sudo
 	# Se detiene la reproducción
 	raw_input("Presione Enter para continuar...")
-	os.system("sudo mpc stop")
+	os.system("sudo echo mi mpc stop")#sudo
+
