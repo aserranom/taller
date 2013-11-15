@@ -34,7 +34,7 @@ class input3(BigInput):
 	def __init__(self):
 		super(input3, self).__init__(3)
 
-class audio_control:
+class audio_controler:
 
 	def __init__(self,passwrd = ""):
 		
@@ -97,6 +97,6 @@ class audio_control:
 			
 			
 
-aux = audio_control("escesc")
+aux = audio_controler("")
 aux.start()
 
