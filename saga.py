@@ -6,7 +6,17 @@ def audio_local():
 	'''
 	Función que reproduce un archivo mp3
 	'''
-	pass
+	# Asegurarse de tener cargado el módulo de sonido
+	os.system("sudo modprobe snd_bcm2835")
+	# Borrar la lista anterior
+	os.system("sudo mpc clear")
+	# Agregar al playlist el archivo de audio
+	os.system("sudo mpc add a.mp3")
+	# Se Reproduce el archivo
+	os.system("sudo mpc play")#sudo
+	# Se detiene la reproducción
+	raw_input("Presione Enter para continuar...")
+	os.system("sudo mpc stop")#sudo
 
 def audio_analogo():
 	'''
