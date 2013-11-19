@@ -17,8 +17,8 @@ def audio_local():
 	# Se Reproduce el archivo
 	os.system("sudo mpc play")#sudo
 	# Se detiene la reproducción
-	#raw_input("Presione Enter para continuar...")
-	#os.system("sudo mpc stop")#sudo
+	raw_input("Presione Enter para continuar...")
+	os.system("sudo mpc stop")#sudo
 
 def audio_analogo():
 	'''
