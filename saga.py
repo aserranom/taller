@@ -11,12 +11,14 @@ def audio_local():
 	# Borrar la lista anterior
 	os.system("sudo mpc clear")
 	# Agregar al playlist el archivo de audio
-	os.system("sudo mpc add a.mp3")
+	# los archivos deben estar antes en  la carpeta /var/lib/mpd/music
+	os.system("sudo mpc update")
+	os.system("sudo mpc add *.mp3")
 	# Se Reproduce el archivo
 	os.system("sudo mpc play")#sudo
 	# Se detiene la reproducción
-	raw_input("Presione Enter para continuar...")
-	os.system("sudo mpc stop")#sudo
+	#raw_input("Presione Enter para continuar...")
+	#os.system("sudo mpc stop")#sudo
 
 def audio_analogo():
 	'''
