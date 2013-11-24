@@ -36,12 +36,12 @@ class input3(BigInput):
 
 class audio_controler:
 
-	def __init__(self,passwrd = ""):
+	def __init__(self,passwrd = "",input_):
 		
 		self.funciones = []	
-		self.funciones.append(input1())
-		self.funciones.append(input2())
-		self.funciones.append(input3())
+		for inpt in input_:
+			self.funciones.append(inpt)
+		
 		#self.funciones.append(saga.audio_local)
 		#self.funciones.append(saga.audio_analogo)
 		#self.funciones.append(saga.audio_web)
@@ -50,14 +50,18 @@ class audio_controler:
 		os.system("echo " + passwrd + " | sudo -S echo 'its on'")
 
 	def start(self):
+		'''indica cual es la entrada con la que va a inicia la reproduccion'''
 		reproducir = 2
 		cont = 0
 		begin_thread = True
-		
+		'''Esto es para testar el codifo'''
 		gap = 1000000
 		print self.funciones[0].can_play(),self.funciones[1].can_play(),self.funciones[2].can_play()
+		'''hasta aca'''
 		while 1 and True:	
-			cont += 1
+			
+
+			cont += 1#parte del testeo
 			if begin_thread:
 				thread.start_new_thread( self.funciones[reproducir].play,())
 				begin_thread = False
@@ -68,10 +72,10 @@ class audio_controler:
 						self.funciones[reproducir].stop()
 						reproducir = i
 						begin_thread = True
-						print self.funciones[0].can_play(),self.funciones[1].can_play(),self.funciones[2].can_play()
+						print self.funciones[0].can_play(),self.funciones[1].can_play(),self.funciones[2].can_play() #test
 						break
 			if not self.funciones[reproducir].can_play():
-				self.funciones[reproducir].stop()
+				self.funciones[reproducir].stop()# es para combiar la entrada si no esta reproduciendo
 				if reproducir < len(self.funciones)-1:
 					begin_thread = True
 					reproducir += 1
@@ -79,7 +83,7 @@ class audio_controler:
 					raise Exception("Nothing to play")
 					
 				
-			####################################
+			####################################el resto es para test
 			
 			if cont == gap:
 				print cont
