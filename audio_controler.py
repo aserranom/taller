@@ -2,7 +2,7 @@ import saga
 import thread
 import os
 
-class BigInput(object):
+'''class BigInput(object):
 	def __init__(self,x):
 		self.canDo= True
 		self.numerode = str(x)
@@ -32,7 +32,7 @@ class input2(BigInput):
 		
 class input3(BigInput):
 	def __init__(self):
-		super(input3, self).__init__(3)
+		super(input3, self).__init__(3)'''
 
 class audio_controler:
 
