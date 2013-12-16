@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 import os
+import wave
+import audioop
+import subprocess
+from time import sleep
+
+
 class InputType(object):
 	
 	def __init__(self):
@@ -45,28 +51,48 @@ class audio_local(InputType):
 	
 class audio_web(InputType):
 	
-	def __init__(self, urls = "http://65.60.34.34:8030" ):
+	def __init__(self, urls = ["http://65.60.34.34:8030"] ):
 		super(audio_web, self).__init__()
 		self.urls = urls
-		
+		self.stream = None
 
 	def next(self):
-	    return InputType.next(self)
-
+		urls.rotate(-1)
+		if self.can_play():
+			self.play()
+		else:
+			return False
 
 	def can_play(self):
-	    return InputType.can_play(self)
-
+		try:
+			mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'])
+			sleep(2)
+			mplayer_stream.terminate()
+			mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'])
+			mplayer_wav.wait()
+			wav_file = wave.open('dump.wav', 'r')
+			data = wav_file.readframes(wav_file.getnframes())
+			rms = audioop.rms(data, 2)
+			self.clean()
+			if rms:
+				return True
+			return False
+		except:
+			return False
 
 	def play(self):
-		os.system("sudo mpc clear")
-		for url in self.urls:
-			os.system("sudo mpc add echo " + url)
-		os.system("sudo mpc play")
+		new_stream = subprocess.Popen(['mplayer', self.urls[0]])
+		self.stop()
+		self.stream = new_stream
 
 	def stop(self):
-	    os.system("sudo mpc stop")
+		if self.stream:
+			self.stream.terminate()
+			self.stream = None
 
+	def clean(self):
+		os.remove('out.dump')
+		os.remove('dump.wav')
 	
 		
 def audio_local():
@@ -92,11 +118,8 @@ def audio_analogo():
 	Función que reproduce la entrada de audio analoga
 	'''
 	pass
-
+'''
 def audio_web():
-	'''
-	Función que reproduce un stream de audio desde internet
-	'''
 	# Asegurarse de tener cargado el módulo de sonido
 	os.system("sudo modprobe snd_bcm2835")
 	# Url de entrada
@@ -111,4 +134,4 @@ def audio_web():
 	# Se detiene la reproducción
 	raw_input("Presione Enter para continuar...")
 	os.system("sudo mpc stop")#sudo
-
+'''
