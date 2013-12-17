@@ -4,6 +4,19 @@ class RadioInterface:
     def __init__(self, ventana):
 
         ventana.minsize(800,400)
+
+       #carga de imagenes
+        img_play        = PhotoImage(file="button_play.gif")
+        img_pause       = PhotoImage(file="button_pause.gif")
+        img_stop        = PhotoImage(file="button_stop.gif")
+        img_back        = PhotoImage(file="button_backward.gif")
+        img_forward     = PhotoImage(file="button_forward.gif")
+        img_bg          = PhotoImage(file="bg.gif")
+
+        #imagen background 
+        self.button_bg          = Label(ventana, image=img_bg)
+        self.button_bg.img_bg   = img_bg
+        self.button_bg.place(x=0, y=0)
         
         #nombre de la aplicacion
         self.frame_NameApp = Frame(ventana, bg = "#f0f0f0")
@@ -12,16 +25,8 @@ class RadioInterface:
         self.label_NameApp = Label(self.frame_NameApp, font=("Helevtica",14), text = "Sistema automatizado para gestion de audio - SAGA v0.1.", anchor = E)
         self.label_NameApp.pack(side = TOP)
 
-
-        #carga de imagenes
-        img_play        = PhotoImage(file="button_play.gif")
-        img_pause       = PhotoImage(file="button_pause.gif")
-        img_stop        = PhotoImage(file="button_stop.gif")
-        img_back        = PhotoImage(file="button_backward.gif")
-        img_forward     = PhotoImage(file="button_forward.gif")
-
         #control de volumen
-        self.frame_controlsVolume = Frame(ventana, width = 200, height = 200)
+        self.frame_controlsVolume = Frame(ventana, width = 200, height = 80)
         self.frame_controlsVolume.pack_propagate(False)
         self.frame_controlsVolume.place(x=570, y=60)
         
@@ -83,7 +88,7 @@ class RadioInterface:
 
 
         #Inputs
-        self.frame_inputs = Frame(ventana, width = 200, height = 150)
+        self.frame_inputs = Frame(ventana, width = 200, height = 130)
         self.frame_inputs.pack_propagate(False)
         self.frame_inputs.place(x=30, y=200)
         self.label_inputs = Label(self.frame_inputs, font=("Helevtica",14), text = "Entrada", anchor = E)
@@ -93,16 +98,16 @@ class RadioInterface:
         self.label_input_1.configure(borderwidth=5,relief=RIDGE)
         self.label_input_1.pack(side = TOP, fill=BOTH)
 
-        self.label_input_2 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Internet", bg='yellow', anchor = W)
+        self.label_input_2 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Internet", bg='gray', anchor = W)
         self.label_input_2.configure(borderwidth=5,relief=RIDGE)
         self.label_input_2.pack(side = TOP, fill=BOTH)
 
-        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga", bg='yellow', anchor = W)
+        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga", bg='gray', anchor = W)
         self.label_input_3.configure(borderwidth=5,relief=RIDGE)
         self.label_input_3.pack(side = TOP, fill=BOTH)
 
         #Outputs
-        self.frame_outputs = Frame(ventana, width = 200, height = 150)
+        self.frame_outputs = Frame(ventana, width = 200, height = 100)
         self.frame_outputs.pack_propagate(False)
         self.frame_outputs.place(x=570, y=200)
         self.label_outputs = Label(self.frame_outputs, font=("Helevtica",14), text = "Salida", anchor = E)
@@ -112,7 +117,7 @@ class RadioInterface:
         self.label_output_1.configure(borderwidth=5,relief=RIDGE)
         self.label_output_1.pack(side = TOP, fill=BOTH)
 
-        self.label_input_2 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Internet", bg='yellow', anchor = W)
+        self.label_input_2 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Internet", bg='gray', anchor = W)
         self.label_input_2.configure(borderwidth=5,relief=RIDGE)
         self.label_input_2.pack(side = TOP, fill=BOTH)
 
@@ -136,4 +141,3 @@ class RadioInterface:
     def volume(self,num):
         self.label_cancion.config(text = num)
         
-
