@@ -1,7 +1,8 @@
 from Tkinter import *
+from PlayList import *
 import tkFont
 class RadioInterface:
-    def __init__(self, ventana):
+    def __init__(self, ventana, playList):
 
         ventana.minsize(800,400)
 
@@ -73,16 +74,9 @@ class RadioInterface:
         self.scrollbar = Scrollbar(self.frame_playlist, orient=VERTICAL)
         self.scrollbar.pack(side=RIGHT, fill=Y)
 
-        self.lista   = Listbox(self.frame_playlist, height=8, yscrollcommand = self.scrollbar.set)
-        self.lista.insert(END,'Cancion 1')
-        self.lista.insert(END,'Cancion 2')
-        self.lista.insert(END,'Cancion 3')
-        self.lista.insert(END,'Cancion 4')
-        self.lista.insert(END,'Cancion 5')
-        self.lista.insert(END,'Cancion 6')
-        self.lista.insert(END,'Cancion 7')
-        self.lista.insert(END,'Cancion 8')
+        self.lista   = Listbox(self.frame_playlist, height=10, yscrollcommand = self.scrollbar.set)
         self.lista.pack(side = TOP, fill = BOTH)
+        playList.songListBox(self.lista)
 
         self.scrollbar.configure(command=self.lista.yview)
 
@@ -128,6 +122,7 @@ class RadioInterface:
 
     def play(self):
         self.label_cancion.config(text = "Playing Song")
+        print self.lista.curselection()
 
     def pause(self):
         self.label_cancion.config(text = "Paused Song")
@@ -140,4 +135,8 @@ class RadioInterface:
 
     def volume(self,num):
         self.label_cancion.config(text = num)
-        
+
+    def playlist(self):
+        self.label_cancion.config(text = "holaaa")
+
+    
