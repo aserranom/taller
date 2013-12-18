@@ -1,9 +1,14 @@
 from Tkinter import *
 from PlayList import *
 import tkFont
-class RadioInterface:
-    def __init__(self, ventana, playList):
+import thread
 
+class RadioInterface:
+    def __init__(self, ventana, playList,control):
+        
+        
+        self.control = control
+        
         ventana.minsize(800,400)
 
        #carga de imagenes
@@ -63,7 +68,9 @@ class RadioInterface:
         self.button_forward.img_forward= img_forward
         self.button_forward.pack(side = LEFT)
 
-        #Playlist
+        #Playlist 
+        ''' el playlist la tiene que implemetar la entrada de audio local,
+         el play tiene que llamas al controlador'''
         self.frame_playlist = Frame(ventana, width = 300, height = 130)
         self.frame_playlist.pack_propagate(False)
         self.frame_playlist.place(x=250, y=200)
@@ -123,22 +130,27 @@ class RadioInterface:
 
 
     def back(self):
+        self.control.back()
         self.label_cancion.config(text = "Previous Song")
         self.setInputandOutput(3,1)
 
     def play(self):
+        self.control.play()
         #self.label_cancion.config(text = "Playing Song")
         index = self.lista.curselection()
         print self.lista.get(int(index[0]))
         self.label_cancion.config(text = self.lista.get(int(index[0])) )
 
     def pause(self):
+        self.control.pause()
         self.label_cancion.config(text = "Paused Song")
 
     def stop(self):
+        self.control.stop()
         self.label_cancion.config(text = "Stopped Song")
 
     def forward(self):
+        self.control.forward()
         self.label_cancion.config(text = "Next Song")
         self.setInputandOutput(1,2)
 
