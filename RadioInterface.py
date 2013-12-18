@@ -122,7 +122,8 @@ class RadioInterface:
 
     def play(self):
         self.label_cancion.config(text = "Playing Song")
-        print self.lista.curselection()
+        index = self.lista.curselection()
+        print self.lista.get(index)
 
     def pause(self):
         self.label_cancion.config(text = "Paused Song")
