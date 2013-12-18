@@ -156,41 +156,41 @@ def audio_analogo():
 	'''
 	chunk = 1024
 	
-	    def __init__(self):
+	def __init__(self):
 	        """ Init audio stream """ 
 	        self.p = pyaudio.PyAudio()
 	        self.stream = self.p.open(
-	            format = pyaudio.paInt16,
-	            channels = 1,
-	            rate = 22000,
-	            input=True,
-	            output = True
+	            	format = pyaudio.paInt16,
+	            	channels = 1,
+	            	rate = 22000,
+	            	input=True,
+	            	output = True
 	        )
 	        self.reproduciendo = True
 	
-	    def can_play(self):
+	def can_play(self):
 	        try:
-	            """
-	            mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'])
-	            sleep(2)
-	            mplayer_stream.terminate()
-	            mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'])
-	            mplayer_wav.wait()
-	            """
-	            #grabar un intervalo de audio en un archivo
-	            data = self.stream.read(self.chunk)
+	            	"""
+	            	mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'])
+	            	sleep(2)
+	            	mplayer_stream.terminate()
+	            	mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'])
+	            	mplayer_wav.wait()
+	            	"""
+	            	#grabar un intervalo de audio en un archivo
+	            	data = self.stream.read(self.chunk)
 	            
-	            #wav_file = wave.open('basuraav', 'r')
-	            #data = wav_file.readframes(wav_file.getnframes())
-	            rms = audioop.rms(data, 2)
-	            #self.clean()
-	            if rms:
-	                    return True
-	            return False
+	            	#wav_file = wave.open('basuraav', 'r')
+	            	#data = wav_file.readframes(wav_file.getnframes())
+	            	rms = audioop.rms(data, 2)
+	            	#self.clean()
+	            	if rms:
+	                    	return True
+	            	return False
 	        except:
-	            return False
+	            	return False
 	
-	    def play(self):
+	def play(self):
 	        """ Play entire file """
 	        """
 	        data = self.stream.read(self.chunk)
@@ -208,11 +208,11 @@ def audio_analogo():
 	        """
 	        rms = audioop.rms(data,2)
 	        while rms:
-	            print data
-	            self.stream.write(data)
-	            data = self.stream.read(self.chunk)        
+	            	print data
+	            	self.stream.write(data)
+	            	data = self.stream.read(self.chunk)        
 	
-	    def stop(self):
+	def stop(self):
 	        """ Graceful shutdown """
 	        self.reproduciendo = False
 	        self.stream.close()
