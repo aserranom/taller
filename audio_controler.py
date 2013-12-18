@@ -12,7 +12,6 @@ class audio_controler:
 		self.funciones = []	
 		for inpt in input_:
 			self.funciones.append(inpt)
-		print self.funciones
 		self.reproducir = 0
 		self.isPause = False
 		#os.system("echo " + passwrd + " | sudo -S echo 'its on'")
