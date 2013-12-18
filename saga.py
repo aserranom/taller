@@ -192,25 +192,11 @@ class audio_analogo(InputType):
 	
 	def play(self):
 	        """ Play entire file """
-	        """
 	        data = self.stream.read(self.chunk)
 	        #while data != '' and reproduciendo:
 	        while self.reproduciendo:
 	            self.stream.write(data)
 	            data = self.stream.read(self.chunk)
-	        """
-	        data = self.stream.read(self.chunk)
-	        """
-	        f = open('workfile', 'w+')
-	        f.write(data)
-	        wav_file = wave.open('workfile', 'r')
-	        data = wav_file.readframes(wav_file.getnframes())
-	        """
-	        rms = audioop.rms(data,2)
-	        while rms:
-	            	print data
-	            	self.stream.write(data)
-	            	data = self.stream.read(self.chunk)        
 	
 	def stop(self):
 	        """ Graceful shutdown """
