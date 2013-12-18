@@ -10,13 +10,19 @@ from time import sleep
 class InputType(object):
 	
 	def __init__(self):
-		os.system("sudo modprobe snd_bcm2835")
-
+		#os.system("sudo modprobe snd_bcm2835")
+		print('Inicio')
 	def next(self):
 		pass# solo la enrada analga NO tiene que implementarlo
-	
+
+	def back(self):
+		pass# solo la enrada analga NO tiene que implementarlo
+		
 	def can_play(self):
 		raise Exception("can_play not implemented!")
+	
+	def pause(self):
+		raise Exception('can not pause')
 
 	def play(self):
 		raise Exception("play not implemented!")
@@ -24,6 +30,37 @@ class InputType(object):
 	def stop(self):
 		raise Exception("play not implemented!")
 	
+
+class Test1(InputType):
+	
+	def __init__(self,x):
+		self.x = x
+		print(self.x)
+		super(Test1, self).__init__()
+		
+	def next(self):
+		print(self.x)
+		print('next')
+
+	def back(self):
+		print(self.x)
+		print('back')
+		
+	def can_play(self):
+		
+		return True
+	
+	def pause(self):
+		print(self.x)
+		print ('Pause')
+
+	def play(self):
+		print(self.x)
+		print ('is plaing')
+
+	def stop(self):
+		print(self.x)
+		print('stop')
 
 class audio_local(InputType):
 	
