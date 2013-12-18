@@ -88,17 +88,20 @@ class RadioInterface:
         self.label_inputs = Label(self.frame_inputs, font=("Helevtica",14), text = "Entrada", anchor = E)
         self.label_inputs.pack(side = TOP)
 
-        self.label_input_1 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Local", bg='yellow', anchor = W)
+        self.label_input_1 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Local", anchor = W)
         self.label_input_1.configure(borderwidth=5,relief=RIDGE)
         self.label_input_1.pack(side = TOP, fill=BOTH)
+        self.label_input_1.configure(bg='gray')
 
-        self.label_input_2 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Internet", bg='gray', anchor = W)
+        self.label_input_2 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Internet", anchor = W)
         self.label_input_2.configure(borderwidth=5,relief=RIDGE)
         self.label_input_2.pack(side = TOP, fill=BOTH)
+        self.label_input_2.configure(bg='gray')
 
-        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga", bg='gray', anchor = W)
+        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga", anchor = W)
         self.label_input_3.configure(borderwidth=5,relief=RIDGE)
         self.label_input_3.pack(side = TOP, fill=BOTH)
+        self.label_input_3.configure(bg='gray')
 
         #Outputs
         self.frame_outputs = Frame(ventana, width = 200, height = 100)
@@ -107,18 +110,21 @@ class RadioInterface:
         self.label_outputs = Label(self.frame_outputs, font=("Helevtica",14), text = "Salida", anchor = E)
         self.label_outputs.pack(side = TOP)
 
-        self.label_output_1 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Analoga", bg='yellow', anchor = W)
+        self.label_output_1 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Analoga", anchor = W)
         self.label_output_1.configure(borderwidth=5,relief=RIDGE)
         self.label_output_1.pack(side = TOP, fill=BOTH)
+        self.label_output_1.configure(bg='gray')
 
-        self.label_input_2 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Internet", bg='gray', anchor = W)
-        self.label_input_2.configure(borderwidth=5,relief=RIDGE)
-        self.label_input_2.pack(side = TOP, fill=BOTH)
+        self.label_output_2 = Label(self.frame_outputs, font=("Helevtica",14), text = "   Internet", anchor = W)
+        self.label_output_2.configure(borderwidth=5,relief=RIDGE)
+        self.label_output_2.pack(side = TOP, fill=BOTH)
+        self.label_output_2.configure(bg='gray')
 
-        
+
 
     def back(self):
         self.label_cancion.config(text = "Previous Song")
+        self.setInputandOutput(3,1)
 
     def play(self):
         #self.label_cancion.config(text = "Playing Song")
@@ -134,11 +140,34 @@ class RadioInterface:
 
     def forward(self):
         self.label_cancion.config(text = "Next Song")
+        self.setInputandOutput(1,2)
 
     def volume(self,num):
         self.label_cancion.config(text = num)
 
-    def playlist(self):
-        self.label_cancion.config(text = "holaaa")
+    def setInputandOutput(self, entrada, salida):
 
+        if salida==1:
+            self.label_output_1.configure(bg='yellow')
+            self.label_output_2.configure(bg='gray')
+
+        if salida==2:
+            self.label_output_1.configure(bg='gray')
+            self.label_output_2.configure(bg='yellow')
+
+        if entrada==1:
+            self.label_input_1.configure(bg='yellow')
+            self.label_input_2.configure(bg='gray')
+            self.label_input_3.configure(bg='gray')
+
+        if entrada==2:
+            self.label_input_1.configure(bg='gray')
+            self.label_input_2.configure(bg='yellow')
+            self.label_input_3.configure(bg='gray')
+
+        if entrada==3:
+            self.label_input_1.configure(bg='gray')
+            self.label_input_2.configure(bg='gray')
+            self.label_input_3.configure(bg='yellow')
+        
     
