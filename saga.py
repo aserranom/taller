@@ -150,7 +150,7 @@ def audio_local():
 	raw_input("Presione Enter para continuar...")
 	os.system("sudo mpc stop")#sudo
 
-def audio_analogo():
+class audio_analogo(InputType):
 	'''
 	Función que reproduce la entrada de audio analoga
 	'''
