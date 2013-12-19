@@ -10,8 +10,8 @@ from time import sleep
 class InputType(object):
 	
 	def __init__(self):
-		#os.system("sudo modprobe snd_bcm2835")
-		print('Inicio')
+		os.system("sudo modprobe snd_bcm2835")
+		
 	def next(self):
 		pass# solo la enrada analga NO tiene que implementarlo
 
@@ -141,55 +141,31 @@ class audio_web(InputType):
 
 class audio_analogo(InputType):
 	'''
-	Función que reproduce la entrada de audio analoga
-	'''
-	chunk = 1024
-	
+	Objeto audio analogo que reproduce la entrada de audio analoga
+	'''	
 	def __init__(self):
-	        """ Init audio stream """ 
-	        self.p = pyaudio.PyAudio()
-	        self.stream = self.p.open(
-	            	format = pyaudio.paInt16,
-	            	channels = 1,
-	            	rate = 22000,
-	            	input=True,
-	            	output = True
-	        )
-	        self.reproduciendo = True
+		""" Init audio stream """ 
+		self.stream = None
+		self.toggle = True
+		self.output = None
 	
 	def can_play(self):
-	        try:
-	            	"""
-	            	mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'])
-	            	sleep(2)
-	            	mplayer_stream.terminate()
-	            	mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'])
-	            	mplayer_wav.wait()
-	            	"""
-	            	#grabar un intervalo de audio en un archivo
-	            	data = self.stream.read(self.chunk)
-	            
-	            	#wav_file = wave.open('basuraav', 'r')
-	            	#data = wav_file.readframes(wav_file.getnframes())
-	            	rms = audioop.rms(data, 2)
-	            	#self.clean()
-	            	if rms:
-	                    	return True
-	            	return False
-	        except:
-	            	return False
-	
+		return self.toggle
+
 	def play(self):
-	        """ Play entire file """
-	        data = self.stream.read(self.chunk)
-	        #while data != '' and reproduciendo:
-	        while self.reproduciendo:
-	            self.stream.write(data)
-	            data = self.stream.read(self.chunk)
+		print 'lol'
+		self.stream = subprocess.Popen(['arecord', '-D', 'plughw:1', '-f', 'dat'], stdout=subprocess.PIPE)
+		self.output = subprocess.check_output(['aplay', '-D', 'plughw:1'], stdin=self.stream.stdout)
+
+	def pause(self):
+		self.toggle = False
 	
 	def stop(self):
-	        """ Graceful shutdown """
-	        self.reproduciendo = False
-	        self.stream.close()
-	        self.p.terminate()
+		if self.stream:
+			self.stream.terminate()
+		self.stream = None
+		self.output.termiante()
 
+if __name__ == "__main__":
+	a = audio_web()
+	a.stop()

@@ -2,7 +2,7 @@ import saga
 import thread
 import os
 from audio_controler import *
-
+import time
 
 
 class audio_controler:
@@ -44,6 +44,8 @@ class audio_controler:
 		'''hasta aca'''
 		while 1 and True:	
 			
+			time.sleep(0.5)
+
 			if self.isPause:
 				continue
 		

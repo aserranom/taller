@@ -3,7 +3,7 @@ from RadioInterface import *
 import thread
 import audio_controler
 from saga import *
-    
+
     
     
 if __name__ == "__main__":
@@ -11,10 +11,10 @@ if __name__ == "__main__":
     ventana.wm_title("SAGA 1 - Taller de Diseno")
     playList = PlayList()
     #input_ = 
-    control = audio_controler.audio_controler( (Test1(1),Test1(2)) )
+    control = audio_controler.audio_controler( (audio_analogo(),audio_web(),audio_local()) )
     radioInterface = RadioInterface(ventana, playList,control)
     thread.start_new(control.start, ())
-    print('lol')
+
     ventana.mainloop()
     
     
