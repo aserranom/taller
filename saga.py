@@ -4,6 +4,7 @@ import os
 import wave
 import audioop
 import subprocess
+import signal
 from time import sleep
 
 
@@ -102,9 +103,14 @@ class audio_web(InputType):
 	def next(self):
 		urls.rotate(-1)
 		if self.can_play():
+			self.stop()
 			self.play()
-		else:
-			return False
+
+	def back(self):
+		urls.rotate(1)
+		if self.can_play():
+			self.stop()
+			self.play()
 
 	def can_play(self):
 		try:
@@ -124,9 +130,8 @@ class audio_web(InputType):
 			return False
 
 	def play(self):
-		new_stream = subprocess.Popen(['mplayer', self.urls[0]])
-		self.stop()
-		self.stream = new_stream
+		if not self.stream:
+			self.stream = subprocess.Popen(['mplayer','-ao', 'alsa:device=hw=1', self.urls[0]])
 
 	def stop(self):
 		if self.stream:
@@ -134,8 +139,10 @@ class audio_web(InputType):
 			self.stream = None
 
 	def clean(self):
-		os.remove('out.dump')
-		os.remove('dump.wav')
+		try:
+			os.remove('out.dump')
+		except:
+			pass
 	
 		
 
@@ -147,25 +154,33 @@ class audio_analogo(InputType):
 		""" Init audio stream """ 
 		self.stream = None
 		self.toggle = True
-		self.output = None
 	
 	def can_play(self):
+		try:
+			wav = subprocess.Popen('arecord -D plug')
+			wav_file = wave.open('dump.wav', 'r')
+			data = wav_file.readframes(wav_file.getnframes())
+			rms = audioop.rms(data, 2)
+			return rms
+		except:
+			return False
+	
 		return self.toggle
 
 	def play(self):
 		print 'lol'
-		self.stream = subprocess.Popen(['arecord', '-D', 'plughw:1', '-f', 'dat'], stdout=subprocess.PIPE)
-		self.output = subprocess.check_output(['aplay', '-D', 'plughw:1'], stdin=self.stream.stdout)
+		if not self.stream:
+			self.stream = subprocess.Popen('arecord -D plughw:1 -f dat | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
 
 	def pause(self):
 		self.toggle = False
 	
 	def stop(self):
 		if self.stream:
-			self.stream.terminate()
-		self.stream = None
-		self.output.termiante()
+			os.killpg(self.stream.pid, signal.SIGTERM)
+			self.stream = None
 
 if __name__ == "__main__":
-	a = audio_web()
-	a.stop()
+	a = audio_analogo()
+	while 1:
+		a.can_play()
