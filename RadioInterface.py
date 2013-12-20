@@ -2,6 +2,7 @@ from Tkinter import *
 from PlayList import *
 import tkFont
 import thread
+import os
 
 class RadioInterface:
     def __init__(self, ventana, playList,control):
@@ -71,7 +72,7 @@ class RadioInterface:
         #Playlist 
         ''' el playlist la tiene que implemetar la entrada de audio local,
          el play tiene que llamas al controlador'''
-        self.frame_playlist = Frame(ventana, width = 300, height = 130)
+        '''self.frame_playlist = Frame(ventana, width = 300, height = 130)
         self.frame_playlist.pack_propagate(False)
         self.frame_playlist.place(x=250, y=200)
 
@@ -126,20 +127,20 @@ class RadioInterface:
         self.label_output_2.configure(borderwidth=5,relief=RIDGE)
         self.label_output_2.pack(side = TOP, fill=BOTH)
         self.label_output_2.configure(bg='gray')
-
+	'''
 
 
     def back(self):
         self.control.back()
         self.label_cancion.config(text = "Previous Song")
-        self.setInputandOutput(3,1)
+        #self.setInputandOutput(3,1)
 
     def play(self):
         self.control.play()
         #self.label_cancion.config(text = "Playing Song")
-        index = self.lista.curselection()
-        print self.lista.get(int(index[0]))
-        self.label_cancion.config(text = self.lista.get(int(index[0])) )
+        #index = self.lista.curselection()
+        #print self.lista.get(int(index[0]))
+        #self.label_cancion.config(text = self.lista.get(int(index[0])) )
 
     def pause(self):
         self.control.pause()
@@ -152,10 +153,11 @@ class RadioInterface:
     def forward(self):
         self.control.forward()
         self.label_cancion.config(text = "Next Song")
-        self.setInputandOutput(1,2)
+        #self.setInputandOutput(1,2)
 
     def volume(self,num):
         self.label_cancion.config(text = num)
+	os.system('amixer set Speaker '+ str(num)+'%')
 
     def setInputandOutput(self, entrada, salida):
 

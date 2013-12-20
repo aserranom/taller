@@ -14,6 +14,7 @@ class audio_controler:
 			self.funciones.append(inpt)
 		self.reproducir = 0
 		self.isPause = False
+		self.keepgoing = True
 		#os.system("echo " + passwrd + " | sudo -S echo 'its on'")
 
 	def back(self):
@@ -32,6 +33,9 @@ class audio_controler:
 	
 	def forward(self):
 		self.funciones[self.reproducir].next()
+
+	def killme(self):
+		self.keepgoing = False 
 	
 	
 	def start(self):
@@ -39,13 +43,10 @@ class audio_controler:
 		
 		cont = 0
 		begin_thread = True
-		'''Esto es para testar el codifo'''
-		#print self.funciones[0].can_play(),self.funciones[1].can_play(),self.funciones[2].can_play()
-		'''hasta aca'''
-		while 1 and True:	
+
+		while 1 and self.keepgoing:				
 			
 			time.sleep(0.5)
-
 			if self.isPause:
 				continue
 		
@@ -60,8 +61,13 @@ class audio_controler:
 						begin_thread = True
 		
 						break
+			time.sleep(0.5)
+			print '\n\n'+'-'*10+'inicio\n',self.funciones[self.reproducir].can_play(),
+			print '\n\n'+'-'*10+'fin\n'
 			if not self.funciones[self.reproducir].can_play():
-				self.funciones[self.reproducir].stop()# es para combiar la entrada si no esta reproduciendo
+				
+				self.funciones[self.reproducir].stop()
+				# es para combiar la entrada si no esta reproduciendo
 				if self.reproducir < len(self.funciones)-1:
 					begin_thread = True
 					self.reproducir += 1

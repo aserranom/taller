@@ -6,7 +6,7 @@ import audioop
 import subprocess
 import signal
 from time import sleep
-
+import glob
 
 class InputType(object):
 	
@@ -36,8 +36,9 @@ class Test1(InputType):
 	
 	def __init__(self,x):
 		self.x = x
-		print(self.x)
+		print(self.x, 'Iniciar')
 		super(Test1, self).__init__()
+		self.plays = True
 		
 	def next(self):
 		print(self.x)
@@ -49,26 +50,32 @@ class Test1(InputType):
 		
 	def can_play(self):
 		
-		return True
+		return self.plays
 	
 	def pause(self):
 		print(self.x)
 		print ('Pause')
 
 	def play(self):
+		
 		print(self.x)
 		print ('is plaing')
 
 	def stop(self):
 		print(self.x)
 		print('stop')
+		self.plays = False
 
 class audio_local(InputType):
 	
 	def __init__(self):
 
 		super(audio_local, self).__init__()
-		
+		thisDirec = '/home/pi/taller'
+		os.chdir('/home/pi')
+		self.playlist = glob.glob('*.mp3')
+		os.chdir(thisDirec)
+		print self.playlist
 		
 	def play(self):
 		os.system("sudo mpc clear")
@@ -83,7 +90,7 @@ class audio_local(InputType):
 		os.system("sudo mpc pause")
 			
 	def can_play(self):
-		pass
+		return True
 	#hay que verificar si hay por lo menos un archivo mp3
 	#comando para que cambie de cancion
 	
@@ -95,7 +102,7 @@ class audio_local(InputType):
 	
 class audio_web(InputType):
 	
-	def __init__(self, urls = ["http://65.60.34.34:8030"] ):
+	def __init__(self, urls = ["http://85.17.30.132:9530"] ):
 		super(audio_web, self).__init__()
 		self.urls = urls
 		self.stream = None
@@ -122,25 +129,32 @@ class audio_web(InputType):
 			wav_file = wave.open('dump.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
 			rms = audioop.rms(data, 2)
-			self.clean()
+			self.clean('out.dump')
+			self.clean('dump.wav')
 			if rms:
 				return True
+			print ''' FALSE THIS
+
+'''
 			return False
 		except:
+			print ''' FALSE THIS
+
+'''
 			return False
 
 	def play(self):
 		if not self.stream:
-			self.stream = subprocess.Popen(['mplayer','-ao', 'alsa:device=hw=1', self.urls[0]])
+			self.stream = subprocess.Popen(['mpg321','-a', 'hw:1', self.urls[0]])
 
 	def stop(self):
 		if self.stream:
 			self.stream.terminate()
 			self.stream = None
 
-	def clean(self):
+	def clean(self,x):
 		try:
-			os.remove('out.dump')
+			os.remove(x)
 		except:
 			pass
 	
@@ -154,17 +168,21 @@ class audio_analogo(InputType):
 		""" Init audio stream """ 
 		self.stream = None
 		self.toggle = True
+		os.system('export AUDIODEV=hw:1,0')
+		os.system('export AUDIODRIVER=alsa')
 	
 	def can_play(self):
-		try:
-			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True)
+		if 1:
+			wav = subprocess.Popen('rec analog.wav trim 0 0:01', shell=True)
 			wav.wait()
 			wav_file = wave.open('analog.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
 			rms = audioop.rms(data, 2)
-			os.remove('analog.wav')
-			return rms
-		except:
+			#os.remove('analog.wav')
+			if rms > 2500:
+				return True
+			return False
+		if 0:
 			return False
 	
 		return self.toggle
@@ -183,6 +201,9 @@ class audio_analogo(InputType):
 			self.stream = None
 
 if __name__ == "__main__":
-	a = audio_analogo()
+	a = audio_local()
+	a.play()
+	raw_input()
 	print a.can_play()
+	a.stop()
 
