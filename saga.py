@@ -157,10 +157,12 @@ class audio_analogo(InputType):
 	
 	def can_play(self):
 		try:
-			wav = subprocess.Popen('arecord -D plug')
-			wav_file = wave.open('dump.wav', 'r')
+			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True)
+			wav.wait()
+			wav_file = wave.open('analog.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
 			rms = audioop.rms(data, 2)
+			os.remove('analog.wav')
 			return rms
 		except:
 			return False
@@ -182,5 +184,5 @@ class audio_analogo(InputType):
 
 if __name__ == "__main__":
 	a = audio_analogo()
-	while 1:
-		a.can_play()
+	print a.can_play()
+
