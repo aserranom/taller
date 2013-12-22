@@ -133,14 +133,8 @@ class audio_web(InputType):
 			self.clean('dump.wav')
 			if rms:
 				return True
-			print ''' FALSE THIS
-
-'''
 			return False
 		except:
-			print ''' FALSE THIS
-
-'''
 			return False
 
 	def play(self):
@@ -168,29 +162,39 @@ class audio_analogo(InputType):
 		""" Init audio stream """ 
 		self.stream = None
 		self.toggle = True
-		os.system('export AUDIODEV=hw:1,0')
-		os.system('export AUDIODRIVER=alsa')
 	
 	def can_play(self):
-		if 1:
-			wav = subprocess.Popen('rec analog.wav trim 0 0:01', shell=True)
+		try:
+			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True)
 			wav.wait()
 			wav_file = wave.open('analog.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
 			rms = audioop.rms(data, 2)
-			#os.remove('analog.wav')
-			if rms > 2500:
+			os.remove('analog.wav')
+			print rms
+			if rms > 600:
 				return True
 			return False
-		if 0:
-			return False
-	
-		return self.toggle
+		except:
+			try:
+				pc = subprocess.Popen(['mplayer', 'analog.dump', '-ao', 'pcm:fast:file=analog_dump.wav', '-af', 'format=s16le'])
+				pc.wait()
+				wav_file = wave.open('analog_dump.wav', 'r')
+				wav_file.setpos(wav_file.getnframes()-100)
+				data = wav_file.readframes(100)
+				rms = audioop.rms(data, 2)
+				self.clean('analog_dump.wav')
+				print rms
+				if rms > 600:
+					return True
+				return False
+			except Exception, e:
+				return false
 
 	def play(self):
 		print 'lol'
 		if not self.stream:
-			self.stream = subprocess.Popen('arecord -D plughw:1 -f dat | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
+			self.stream = subprocess.Popen('arecord -D plughw:1 -f dat | tee analog.dump | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
 
 	def pause(self):
 		self.toggle = False
@@ -200,10 +204,18 @@ class audio_analogo(InputType):
 			os.killpg(self.stream.pid, signal.SIGTERM)
 			self.stream = None
 
+	def clean(self,x):
+		try:
+			os.remove(x)
+		except:
+			pass
+
 if __name__ == "__main__":
-	a = audio_local()
-	a.play()
-	raw_input()
+	a = audio_analogo()
 	print a.can_play()
+	raw_input()
+	a.play()
+	while raw_input():
+		print a.can_play()
 	a.stop()
 
