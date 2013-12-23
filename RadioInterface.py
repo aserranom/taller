@@ -196,11 +196,11 @@ class RadioInterface:
     	    self.label_input_2.configure(bg='gray')
     	    self.label_input_3.configure(bg='yellow')#analogo
     	if entrada == 1:#web 1
-    	    self.label_input_1.configure(bg='yellow') #local
-    	    self.label_input_2.configure(bg='gray')
+    	    self.label_input_1.configure(bg='gray')
+    	    self.label_input_2.configure(bg='yellow') #internet
     	    self.label_input_3.configure(bg='gray') 
     	if entrada == 2:#analogo 2
-    	    self.label_input_1.configure(bg='gray')
-    	    self.label_input_2.configure(bg='yellow') # internet
+    	    self.label_input_1.configure(bg='yellow') # local
+    	    self.label_input_2.configure(bg='gray') 
     	    self.label_input_3.configure(bg='gray')
 
