@@ -9,7 +9,7 @@ class RadioInterface:
         
         
         #self.control = control
-        self.control=Null
+        self.control=None
         
         ventana.minsize(650,360)
         ventana.maxsize(ventana.winfo_screenwidth(),ventana.winfo_screenheight())
