@@ -43,6 +43,7 @@ class RadioInterface:
         self.scale_volume.pack()
         self.label_volume = Label(self.frame_controlsVolume, font=("Helevtica",14), text = "Volumen", anchor = E)
         self.label_volume.pack(side = TOP)
+        self.scale_volume.set(50)
 
         #controles de la radio |<< |> || [] >>|
         self.frame_controlsRadio = Frame(ventana, width = 500, height = 100)
