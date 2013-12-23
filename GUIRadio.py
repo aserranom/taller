@@ -12,7 +12,7 @@ from saga import *
     
 if __name__ == "__main__":
     ventana = Tk()
-    ventana.wm_title("SAGA 1 - Taller de Diseno")
+    ventana.wm_title("SAGA 1 - Taller de Diseño")
     playList = PlayList()
     input_a = (audio_analogo(), audio_web(),audio_local())
     
