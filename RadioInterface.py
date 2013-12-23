@@ -23,9 +23,9 @@ class RadioInterface:
         img_bg          = PhotoImage(file="bg.gif")
 
         #imagen background 
-        '''self.button_bg          = Label(ventana, image=img_bg)
+        self.button_bg          = Label(ventana, image=img_bg)
         self.button_bg.img_bg   = img_bg
-        self.button_bg.place(x=0, y=0)'''
+        self.button_bg.place(x=0, y=0)
         
         #nombre de la aplicacion
         self.frame_NameApp = Frame(ventana, bg = "#f0f0f0")
