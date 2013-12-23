@@ -191,15 +191,16 @@ class RadioInterface:
     	self.control=newControl
     	
     def setInterfaceInput(self, entrada):
-    	if entrada == 0:#local 0
-    	    self.label_input_1.configure(bg='yellow')
+    	if entrada == 0:#local analogo
+    	    self.label_input_1.configure(bg='gray')
     	    self.label_input_2.configure(bg='gray')
-    	    self.label_input_3.configure(bg='gray')
+    	    self.label_input_3.configure(bg='yellow')#analogo
+    	if entrada == 1:#web 1
+    	    self.label_input_1.configure(bg='yellow') #local
+    	    self.label_input_2.configure(bg='gray')
+    	    self.label_input_3.configure(bg='gray') 
     	if entrada == 2:#analogo 2
     	    self.label_input_1.configure(bg='gray')
-    	    self.label_input_2.configure(bg='yellow')
+    	    self.label_input_2.configure(bg='yellow') # internet
     	    self.label_input_3.configure(bg='gray')
-    	if entrada == 1:#web 1
-    	    self.label_input_1.configure(bg='gray')
-    	    self.label_input_2.configure(bg='gray')
-    	    self.label_input_3.configure(bg='yellow')
+
