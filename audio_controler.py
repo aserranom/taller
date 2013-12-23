@@ -7,7 +7,7 @@ import time
 
 class audio_controler:
 
-	def __init__(self,input_):
+	def __init__(self,input_,interFace):
 		
 		self.funciones = []	
 		for inpt in input_:
@@ -16,6 +16,7 @@ class audio_controler:
 		self.isPause = False
 		self.keepgoing = True
 		#os.system("echo " + passwrd + " | sudo -S echo 'its on'")
+		self.interFace = interFace
 
 	def back(self):
 		self.funciones[self.reproducir].back()
@@ -53,6 +54,7 @@ class audio_controler:
 		
 			if begin_thread:
 				thread.start_new_thread( self.funciones[self.reproducir].play,())
+				self.interFace.setInterfaceInput(self.reproducir)
 				begin_thread = False
 			if self.reproducir > 0:
 				for i in range(self.reproducir):
