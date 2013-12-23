@@ -190,15 +190,15 @@ class RadioInterface:
     	self.control=newControl
     	
     def setInterfaceInput(self, entrada):
-    	if entrada == 1:
+    	if entrada == 0:
     	    self.label_input_1.configure(bg='yellow')
     	    self.label_input_2.configure(bg='gray')
     	    self.label_input_3.configure(bg='gray')
-    	if entrada == 2:
+    	if entrada == 1:
     	    self.label_input_1.configure(bg='gray')
     	    self.label_input_2.configure(bg='yellow')
     	    self.label_input_3.configure(bg='gray')
-    	if entrada == 3:
+    	if entrada == 2:
     	    self.label_input_1.configure(bg='gray')
     	    self.label_input_2.configure(bg='gray')
     	    self.label_input_3.configure(bg='yellow')
