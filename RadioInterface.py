@@ -35,7 +35,7 @@ class RadioInterface:
         self.label_NameApp.pack(side = TOP)
 
         #control de volumen
-        self.frame_controlsVolume = Frame(ventana, width = 200, height = 80)
+        self.frame_controlsVolume = Frame(ventana, width = 300, height = 80)
         self.frame_controlsVolume.pack_propagate(False)
         self.frame_controlsVolume.place(x=30, y=180)
         
