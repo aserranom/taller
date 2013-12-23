@@ -35,11 +35,11 @@ class RadioInterface:
         self.label_NameApp.pack(side = TOP)
 
         #control de volumen
-        self.frame_controlsVolume = Frame(ventana, width = 300, height = 80)
+        self.frame_controlsVolume = Frame(ventana, width = 200, height = 80)
         self.frame_controlsVolume.pack_propagate(False)
-        self.frame_controlsVolume.place(x=30, y=180)
+        self.frame_controlsVolume.place(x=40, y=220)
         
-        self.scale_volume = Scale(self.frame_controlsVolume, from_=0, to=100, width="30", length="100", orient=HORIZONTAL, command = self.volume)
+        self.scale_volume = Scale(self.frame_controlsVolume, from_=0, to=100, width="30", length="200", orient=HORIZONTAL, font=("Helevtica",14), command = self.volume)
         self.scale_volume.pack()
         self.label_volume = Label(self.frame_controlsVolume, font=("Helevtica",14), text = "Volumen", anchor = E)
         self.label_volume.pack(side = TOP)
@@ -95,7 +95,7 @@ class RadioInterface:
         #Inputs
         self.frame_inputs = Frame(ventana, width = 200, height = 130)
         self.frame_inputs.pack_propagate(False)
-        self.frame_inputs.place(x=250, y=180)
+        self.frame_inputs.place(x=280, y=190)
         self.label_inputs = Label(self.frame_inputs, font=("Helevtica",14), text = "Entrada", anchor = E)
         self.label_inputs.pack(side = TOP)
 
