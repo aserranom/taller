@@ -78,13 +78,13 @@ class audio_local(InputType):
 		print self.playlist
 		
 	def play(self):
-		os.system("sudo mpc clear")
-		os.system("sudo mpc update")
-		os.system("sudo mpc add /")
 		os.system("sudo mpc play")
 		
 	def stop(self):
 		os.system("sudo mpc stop")
+		os.system("sudo mpc clear")
+		os.system("sudo mpc update")
+		os.system("sudo mpc add /")
 
 	def pause(self):
 		os.system("sudo mpc pause")
