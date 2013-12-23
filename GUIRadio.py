@@ -1,3 +1,7 @@
+#!/bin/sh
+""":"
+exec python $0 ${1+"$@"}
+"""
 from Tkinter import *
 from RadioInterface import *
 import thread
