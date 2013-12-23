@@ -35,6 +35,7 @@ class audio_controler:
 		self.funciones[self.reproducir].next()
 
 	def killme(self):
+		self.funciones[self.reproducir].stop()
 		self.keepgoing = False 
 	
 	
@@ -62,7 +63,7 @@ class audio_controler:
 		
 						break
 			time.sleep(0.5)
-			print '\n\n'+'-'*10+'inicio\n',self.funciones[self.reproducir].can_play(),
+			print '\n\n'+'-'*10+'inicio\n',self.funciones[self.reproducir].can_play(),self.funciones[self.reproducir]
 			print '\n\n'+'-'*10+'fin\n'
 			if not self.funciones[self.reproducir].can_play():
 				

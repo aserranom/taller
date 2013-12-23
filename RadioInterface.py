@@ -10,7 +10,8 @@ class RadioInterface:
         
         self.control = control
         
-        ventana.minsize(800,400)
+        ventana.minsize(650,360)
+        ventana.maxsize(ventana.winfo_screenwidth(),ventana.winfo_screenheight())
 
        #carga de imagenes
         img_play        = PhotoImage(file="button_play.gif")
@@ -21,9 +22,9 @@ class RadioInterface:
         img_bg          = PhotoImage(file="bg.gif")
 
         #imagen background 
-        self.button_bg          = Label(ventana, image=img_bg)
+        '''self.button_bg          = Label(ventana, image=img_bg)
         self.button_bg.img_bg   = img_bg
-        self.button_bg.place(x=0, y=0)
+        self.button_bg.place(x=0, y=0)'''
         
         #nombre de la aplicacion
         self.frame_NameApp = Frame(ventana, bg = "#f0f0f0")
@@ -35,7 +36,7 @@ class RadioInterface:
         #control de volumen
         self.frame_controlsVolume = Frame(ventana, width = 200, height = 80)
         self.frame_controlsVolume.pack_propagate(False)
-        self.frame_controlsVolume.place(x=570, y=60)
+        self.frame_controlsVolume.place(x=30, y=180)
         
         self.scale_volume = Scale(self.frame_controlsVolume, from_=0, to=100, width="30", length="200", orient=HORIZONTAL, command = self.volume)
         self.scale_volume.pack()

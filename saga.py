@@ -71,22 +71,29 @@ class audio_local(InputType):
 	def __init__(self):
 
 		super(audio_local, self).__init__()
-		thisDirec = '/home/pi/taller'
-		os.chdir('/home/pi')
-		self.playlist = glob.glob('*.mp3')
-		os.chdir(thisDirec)
-		print self.playlist
+		self.ispause = False
 		
 	def play(self):
+		print "entre audio local!!!"
+
+		if not self.ispause:
+			os.system("sudo mpc clear")
+			os.system("sudo mpc update")
+			os.system("sudo mpc add /")
+
+		
 		os.system("sudo mpc play")
+		
+		
 		
 	def stop(self):
 		os.system("sudo mpc stop")
-		os.system("sudo mpc clear")
-		os.system("sudo mpc update")
-		os.system("sudo mpc add /")
+		self.ispause = False
+		
 
 	def pause(self):
+		self.ispause = True
+		
 		os.system("sudo mpc pause")
 			
 	def can_play(self):
@@ -121,10 +128,10 @@ class audio_web(InputType):
 
 	def can_play(self):
 		try:
-			mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'])
+			mplayer_stream = subprocess.Popen(['mplayer', self.urls[0], '-dumpstream', '-dumpfile', 'out.dump'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			sleep(2)
 			mplayer_stream.terminate()
-			mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'])
+			mplayer_wav = subprocess.Popen(['mplayer', 'out.dump', '-ao', 'pcm:fast:file=dump.wav', '-af', 'format=s16le'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			mplayer_wav.wait()
 			wav_file = wave.open('dump.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
@@ -133,8 +140,10 @@ class audio_web(InputType):
 			self.clean('dump.wav')
 			if rms:
 				return True
+			print 'no web'
 			return False
 		except:
+			print 'no web'
 			return False
 
 	def play(self):
@@ -164,7 +173,7 @@ class audio_analogo(InputType):
 
 	def can_play(self):
 		try:
-			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True)
+			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			wav.wait()
 			wav_file = wave.open('analog.wav', 'r')
 			data = wav_file.readframes(wav_file.getnframes())
@@ -173,10 +182,11 @@ class audio_analogo(InputType):
 			print rms
 			if rms > 600:
 				return True
+			print 'no analog'
 			return False
 		except:
 			try:
-				pc = subprocess.Popen(['mplayer', 'analog.dump', '-ao', 'pcm:fast:file=analog_dump.wav', '-af', 'format=s16le'])
+				pc = subprocess.Popen(['mplayer', 'analog.dump', '-ao', 'pcm:fast:file=analog_dump.wav', '-af', 'format=s16le'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 				pc.wait()
 				wav_file = wave.open('analog_dump.wav', 'r')
 				wav_file.setpos(wav_file.getnframes()-100)
@@ -186,14 +196,16 @@ class audio_analogo(InputType):
 				print rms
 				if rms > 600:
 					return True
+				print 'no analog'
 				return False
 			except Exception, e:
+				print 'no analog'
 				return false
 
 	def play(self):
 		print 'lol'
 		if not self.stream:
-			self.stream = subprocess.Popen('arecord -D plughw:1 -f dat | tee analog.dump | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
+			self.stream = subprocess.Popen('arecord -D plughw:1 -f S16_LE -r 32000 -c 1 -B 1500000 | tee analog.dump | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
 
 	
 	def stop(self):
