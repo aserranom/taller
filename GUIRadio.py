@@ -14,7 +14,7 @@ if __name__ == "__main__":
     ventana = Tk()
     ventana.wm_title("SAGA 1 - Taller de Diseno")
     playList = PlayList()
-    input_a = (audio_web(),audio_local())
+    input_a = (audio_analogo(), audio_web(),audio_local())
     
     control = audio_controler.audio_controler( input_a )
     radioInterface = RadioInterface(ventana, playList,control)
