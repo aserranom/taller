@@ -93,9 +93,9 @@ class RadioInterface:
 
 
         #Inputs
-        self.frame_inputs = Frame(ventana, width = 200, height = 130)
+        self.frame_inputs = Frame(ventana, width = 200, height = 160)
         self.frame_inputs.pack_propagate(False)
-        self.frame_inputs.place(x=280, y=190)
+        self.frame_inputs.place(x=280, y=180)
         self.label_inputs = Label(self.frame_inputs, font=("Helevtica",14), text = "Entrada", anchor = E)
         self.label_inputs.pack(side = TOP)
 
@@ -109,10 +109,15 @@ class RadioInterface:
         self.label_input_2.pack(side = TOP, fill=BOTH)
         self.label_input_2.configure(bg='gray')
 
-        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga", anchor = W)
+        self.label_input_3 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga 1", anchor = W)
         self.label_input_3.configure(borderwidth=5,relief=RIDGE)
         self.label_input_3.pack(side = TOP, fill=BOTH)
         self.label_input_3.configure(bg='gray')
+
+        self.label_input_4 = Label(self.frame_inputs, font=("Helevtica",14), text = "   Analoga 2", anchor = W)
+        self.label_input_4.configure(borderwidth=5,relief=RIDGE)
+        self.label_input_4.pack(side = TOP, fill=BOTH)
+        self.label_input_4.configure(bg='gray')
 
         '''#Outputs
         self.frame_outputs = Frame(ventana, width = 200, height = 100)
@@ -195,12 +200,20 @@ class RadioInterface:
     	    self.label_input_1.configure(bg='gray')
     	    self.label_input_2.configure(bg='gray')
     	    self.label_input_3.configure(bg='yellow')#analogo
-    	if entrada == 1:#web 1
+    	    self.label_input_4.configure(bg='gray')#analogo
+    	if entrada == 1:#local analogo
+    	    self.label_input_1.configure(bg='gray')
+    	    self.label_input_2.configure(bg='gray')
+    	    self.label_input_3.configure(bg='gray')#analogo
+    	    self.label_input_4.configure(bg='yellow')#analogo
+    	if entrada == 2:#web 1
     	    self.label_input_1.configure(bg='gray')
     	    self.label_input_2.configure(bg='yellow') #internet
-    	    self.label_input_3.configure(bg='gray') 
-    	if entrada == 2:#analogo 2
+    	    self.label_input_3.configure(bg='gray')
+    	    self.label_input_4.configure(bg='gray') 
+    	if entrada == 3:#analogo 2
     	    self.label_input_1.configure(bg='yellow') # local
     	    self.label_input_2.configure(bg='gray') 
     	    self.label_input_3.configure(bg='gray')
+    	    self.label_input_4.configure(bg='gray') 
 
