@@ -161,8 +161,7 @@ class audio_analogo(InputType):
 	def __init__(self):
 		""" Init audio stream """ 
 		self.stream = None
-		self.toggle = True
-	
+
 	def can_play(self):
 		try:
 			wav = subprocess.Popen('arecord -D plughw:1 -f dat -d 1 analog.wav', shell=True)
@@ -196,8 +195,6 @@ class audio_analogo(InputType):
 		if not self.stream:
 			self.stream = subprocess.Popen('arecord -D plughw:1 -f dat | tee analog.dump | aplay -D plughw:1', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
 
-	def pause(self):
-		self.toggle = False
 	
 	def stop(self):
 		if self.stream:
