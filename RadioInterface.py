@@ -5,10 +5,11 @@ import thread
 import os
 
 class RadioInterface:
-    def __init__(self, ventana, playList,control):
+    def __init__(self, ventana, playList):
         
         
-        self.control = control
+        #self.control = control
+        self.control=null
         
         ventana.minsize(650,360)
         ventana.maxsize(ventana.winfo_screenwidth(),ventana.winfo_screenheight())
@@ -38,7 +39,7 @@ class RadioInterface:
         self.frame_controlsVolume.pack_propagate(False)
         self.frame_controlsVolume.place(x=30, y=180)
         
-        self.scale_volume = Scale(self.frame_controlsVolume, from_=0, to=100, width="30", length="200", orient=HORIZONTAL, command = self.volume)
+        self.scale_volume = Scale(self.frame_controlsVolume, from_=0, to=100, width="30", length="100", orient=HORIZONTAL, command = self.volume)
         self.scale_volume.pack()
         self.label_volume = Label(self.frame_controlsVolume, font=("Helevtica",14), text = "Volumen", anchor = E)
         self.label_volume.pack(side = TOP)
@@ -87,13 +88,13 @@ class RadioInterface:
         self.lista.pack(side = TOP, fill = BOTH)
         playList.songListBox(self.lista)
 
-        self.scrollbar.configure(command=self.lista.yview)
+        self.scrollbar.configure(command=self.lista.yview)'''
 
 
         #Inputs
         self.frame_inputs = Frame(ventana, width = 200, height = 130)
         self.frame_inputs.pack_propagate(False)
-        self.frame_inputs.place(x=30, y=200)
+        self.frame_inputs.place(x=250, y=180)
         self.label_inputs = Label(self.frame_inputs, font=("Helevtica",14), text = "Entrada", anchor = E)
         self.label_inputs.pack(side = TOP)
 
@@ -112,7 +113,7 @@ class RadioInterface:
         self.label_input_3.pack(side = TOP, fill=BOTH)
         self.label_input_3.configure(bg='gray')
 
-        #Outputs
+        '''#Outputs
         self.frame_outputs = Frame(ventana, width = 200, height = 100)
         self.frame_outputs.pack_propagate(False)
         self.frame_outputs.place(x=570, y=200)
@@ -184,5 +185,20 @@ class RadioInterface:
             self.label_input_1.configure(bg='gray')
             self.label_input_2.configure(bg='gray')
             self.label_input_3.configure(bg='yellow')
-        
     
+    def setControl(self, newControl):
+    	self.control=newControl
+    	
+    def setInterfaceInput(self, entrada):
+    	if entrada == 1:
+    	    self.label_input_1.configure(bg='yellow')
+    	    self.label_input_2.configure(bg='gray')
+    	    self.label_input_3.configure(bg='gray')
+    	if entrada == 2:
+    	    self.label_input_1.configure(bg='gray')
+    	    self.label_input_2.configure(bg='yellow')
+    	    self.label_input_3.configure(bg='gray')
+    	if entrada == 3:
+    	    self.label_input_1.configure(bg='gray')
+    	    self.label_input_2.configure(bg='gray')
+    	    self.label_input_3.configure(bg='yellow')
