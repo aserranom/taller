@@ -17,7 +17,7 @@ if __name__ == "__main__":
     input_a = (audio_analogo(), audio_web(),audio_local())
     
     radioInterface = RadioInterface(ventana, playList)
-    control = audio_controler.audio_controler( input_a )
+    control = audio_controler.audio_controler( input_a, radioInterface)
     radioInterface.setControl(control)
     thread.start_new(control.start, ())
 
